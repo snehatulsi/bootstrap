@@ -129,10 +129,10 @@ angular.module('ui.bootstrap.dropdown', ['ui.bootstrap.position'])
     }
 
     $animate[isOpen ? 'addClass' : 'removeClass'](self.$element, openClass).then(function() {
--		+  if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
-+        toggleInvoker($scope, { open: !!isOpen });
-+      }
-+    });
+        if (angular.isDefined(isOpen) && isOpen !== wasOpen) {
+           toggleInvoker($scope, { open: !!isOpen });
+        }
+    });
 
     if ( isOpen ) {
       scope.focusToggleElement();
