@@ -1,13 +1,14 @@
 describe('dropdownToggle', function() {
-  var $compile, $rootScope, $document, dropdownConfig, element;
+  var $compile, $rootScope, $document, dropdownConfig, element, $browser;
 
   beforeEach(module('ui.bootstrap.dropdown'));
 
-  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _dropdownConfig_) {
+  beforeEach(inject(function(_$compile_, _$rootScope_, _$document_, _dropdownConfig_, _$browser_) {
     $compile = _$compile_;
     $rootScope = _$rootScope_;
     $document = _$document_;
     dropdownConfig = _dropdownConfig_;
+    $browser = _$browser_;
   }));
 
   afterEach(function() {
@@ -297,9 +298,11 @@ describe('dropdownToggle', function() {
     it('should call it correctly when toggles', function() {
       $rootScope.isopen = true;
       $rootScope.$digest();
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });
@@ -313,16 +316,19 @@ describe('dropdownToggle', function() {
     });
 
     it('should not have been called initially', function() {
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).not.toHaveBeenCalled();
     });
 
     it('should call it correctly when toggles', function() {
       $rootScope.isopen = false;
       $rootScope.$digest();
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
 
       $rootScope.isopen = true;
       $rootScope.$digest();
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
     });
   });
@@ -335,14 +341,17 @@ describe('dropdownToggle', function() {
     });
 
     it('should not have been called initially', function() {
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).not.toHaveBeenCalled();
     });
 
     it('should call it when clicked', function() {
       clickDropdownToggle();
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(true);
 
       clickDropdownToggle();
+      $browser.defer.flush();
       expect($rootScope.toggleHandler).toHaveBeenCalledWith(false);
     });
   });
